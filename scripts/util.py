@@ -42,7 +42,7 @@ def generate_circuit(info, circuit_template, id = None):
     :param id: id of the circuit
 
     """
-    out_circuit = circuit_template.split('/')[-1].split('_')[0]
+    out_circuit = circuit_template.split('/')[-1].split('.')[0]
     os.makedirs('circuits/benchmark',exist_ok=True)
 
     with open(circuit_template, 'r') as infile:

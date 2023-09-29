@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from scripts.util import append_to_csv, extract_contraints, generate_circuit, generate_input, measure_command
-POT = './powersoftau/pot_25.ptau'
+POT = './powersoftau/pot_15.ptau'
 
 
 def test_circuit(circuit_name, input_path,pot_path,verbose=True):
@@ -38,10 +38,10 @@ def test_circuit(circuit_name, input_path,pot_path,verbose=True):
 
 if __name__ == '__main__':
     NUM = 50
-    ITER = 3
+    circuit_name = f'poseidon_hash'
 
-    generate_circuit({'NUM':NUM,'ITER':ITER},'./circuits/base/iterativesha256_bytes.circom',id=NUM)
+    generate_circuit({'NUM':NUM},f'./circuits/base/{circuit_name}.circom',id=NUM)
     generate_input(f'./input/input_{NUM}.json',NUM)
-    measures = test_circuit(f'iterativesha256_{NUM}',f'./input/input_{NUM}.json',POT)
+    measures = test_circuit(f'{circuit_name}_{NUM}',f'./input/input_{NUM}.json',POT)
     append_to_csv(measures,'./benchmark_circuits.csv')
     
