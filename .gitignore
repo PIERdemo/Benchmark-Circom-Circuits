@@ -1,3 +1,5 @@
 /input
 /output
 /powersoftau
+/circuits/benchmark
+**/__pycache__
