@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from scripts.util import append_to_csv, extract_contraints, generate_circuit, generate_input, measure_command
-POT = './powersoftau/pot_15.ptau'
+POT = './powersoftau/20.ptau'
 
 
 def test_circuit(circuit_name, input_path,pot_path,verbose=True):
