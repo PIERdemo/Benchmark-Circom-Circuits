@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 
 from scripts.util import append_to_csv, extract_contraints, generate_circuit, generate_input, measure_command
-POT = './powersoftau/pot_15.ptau'
+POT = './powersoftau/pot_25.ptau'
 
 
 def test_circuit(circuit_name, input_path,pot_path,verbose=True):
     r1cs_path = 'output/compiled_circuit/compiled_{}/{}.r1cs'
-
     t_c,m_c = measure_command(f'./scripts/compile_circuit.sh ./circuits/benchmark/{circuit_name}.circom {input_path} ')
     if verbose:
         print(f'[{circuit_name}] Compile Circuit: {t_c} seconds, {m_c} MB')
     constraints = extract_contraints(r1cs_path.format(circuit_name,circuit_name))
+    if verbose:
+        print(f'[{circuit_name}] Constraints: {constraints}')
 
     t_sp,m_sp = measure_command(f'./scripts/proving_system/setup_prover.sh {circuit_name} {pot_path}')
     if verbose:
@@ -37,8 +38,10 @@ def test_circuit(circuit_name, input_path,pot_path,verbose=True):
 
 if __name__ == '__main__':
     NUM = 50
-    generate_circuit({'NUM':NUM},'./circuits/base/sha256_bytes.circom',id=NUM)
+    ITER = 3
+
+    generate_circuit({'NUM':NUM,'ITER':ITER},'./circuits/base/iterativesha256_bytes.circom',id=NUM)
     generate_input(f'./input/input_{NUM}.json',NUM)
-    measures = test_circuit(f'sha256_{NUM}',f'./input/input_{NUM}.json',POT)
+    measures = test_circuit(f'iterativesha256_{NUM}',f'./input/input_{NUM}.json',POT)
     append_to_csv(measures,'./benchmark_circuits.csv')
     

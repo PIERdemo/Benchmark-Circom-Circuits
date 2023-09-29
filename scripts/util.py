@@ -49,6 +49,7 @@ def generate_circuit(info, circuit_template, id = None):
         circuit = infile.read()
         for k,v in info.items():
             circuit = circuit.replace(k, str(v))
+        circuit = circuit.replace('//MAIN', '')
         
         id = f'_{id}' if id is not None else ''
         out_path = f'circuits/benchmark/{out_circuit}{id}.circom'
@@ -77,6 +78,7 @@ def generate_input(output_path, size):
     :param size: size of the input
     """
     json_input = {'in':[str(random.randint(0, 255)) for _ in range(size)] }
+    os.makedirs('input',exist_ok=True)
     with open(output_path, 'w') as outfile:
         json.dump(json_input, outfile)
     
