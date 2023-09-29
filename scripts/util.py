@@ -6,7 +6,7 @@ import os
 import random
 import subprocess
 import psutil
-
+import re
 
 def measure_command(command):
     """
@@ -80,6 +80,11 @@ def generate_input(output_path, size):
     with open(output_path, 'w') as outfile:
         json.dump(json_input, outfile)
     
+
+def extract_contraints(r1cs_file):
+    infos = subprocess.check_output(f'snarkjs r1cs info {r1cs_file}',shell=True).decode('utf-8')
+    return int(re.search(r'# of Constraints: (\d+)',infos).group(1))
+
 
 if __name__ == '__main__':
     raise ValueError('This script is not meant to be executed directly')
