@@ -8,20 +8,20 @@ def test_circuit(circuit_name, input_path,pot_path,verbose=True):
     r1cs_path = 'output/compiled_circuit/compiled_{}/{}.r1cs'
     t_c,m_c = measure_command(f'./scripts/compile_circuit.sh ./circuits/benchmark/{circuit_name}.circom {input_path} ')
     if verbose:
-        print(f'[{circuit_name}] Compile Circuit: {t_c} seconds, {m_c} MB')
+        print(f'[{circuit_name}] Compile Circuit: {t_c} seconds, {m_c} KB')
     constraints = extract_contraints(r1cs_path.format(circuit_name,circuit_name))
     if verbose:
         print(f'[{circuit_name}] Constraints: {constraints}')
 
     t_sp,m_sp = measure_command(f'./scripts/proving_system/setup_prover.sh {circuit_name} {pot_path}')
     if verbose:
-        print(f'[{circuit_name}] Setup Prover: {t_sp} seconds, {m_sp} MB')
+        print(f'[{circuit_name}] Setup Prover: {t_sp} seconds, {m_sp} KB')
     t_p,m_p = measure_command(f'./scripts/proving_system/prover.sh {circuit_name} ')
     if verbose:
-        print(f'[{circuit_name}] Prover: {t_p} seconds, {m_p} MB')
+        print(f'[{circuit_name}] Prover: {t_p} seconds, {m_p} KB')
     t_v,m_v = measure_command(f'./scripts/proving_system/verifier.sh {circuit_name}')
     if verbose:
-        print(f'[{circuit_name}] Verifier: {t_v} seconds, {m_v} MB')
+        print(f'[{circuit_name}] Verifier: {t_v} seconds, {m_v} KB')
     
     return {'CIRCUIT':circuit_name,
            'INPUT SIZE':input_path.split('_')[-1].split('.')[0],
