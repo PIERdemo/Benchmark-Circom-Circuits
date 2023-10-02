@@ -20,9 +20,9 @@ This repository is dedicated to a powerful and user-friendly framework designed 
 
 1.  Clone this repository to your local system.
 2.  Add new circuits to the `circuits/base` folder.
-3.  Modify the `main` file of the circuit with the correct formatting and values to be customized in Python.
-4.  Edit the test files in the `circuits` directory to adapt them to the new circuit, updating the circuit name, powersoftau, and other parameters as needed.
-5.  Run the tests to ensure the circuit functions correctly.
+3.  Modify the `main` line of the circuit with the correct formatting and values to be customized in Python.
+4.  Edit the files `test_circuits.py` to adapt it to the new circuit, updating the circuit name, powersoftau, and other parameters as needed.
+5.  Run the benchmark to ensure the circuit functions correctly.
 
 **Contributions are Welcome:**
 
