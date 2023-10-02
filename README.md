@@ -13,7 +13,7 @@ This repository is dedicated to a powerful and user-friendly framework designed 
 
 1.  **Extensibility:** The framework is highly extensible. To add new circuits, simply follow a few clear rules and place the circuits in the `circuits/base` folder. Additionally, provide a commented `main` file following the appropriate formatting.
     
-2.  **Easy Customization:** You can effortlessly customize circuit values using Python. Just make the necessary changes in the test files within the `circuits` directory to update the circuit name, powersoftau, and other relevant parameters.
+2.  **Easy Customization:** You can effortlessly customize circuit values using Python. Just make the necessary changes in the files `test_circuits.py` to adapt it to the new circuit.
     
 
 **Getting Started:**
