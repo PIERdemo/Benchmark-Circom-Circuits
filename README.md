@@ -1,5 +1,10 @@
 # Benchmark_Circuits
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+![Circom Badge](https://img.shields.io/badge/circuits-circom-black)
+![Python Badge](https://img.shields.io/badge/compile-python-green)
+
+
+
+
 
 This repository is dedicated to a powerful and user-friendly framework designed for testing various circuits using Circom. Our main objective is to simplify the testing process, allowing developers to easily add new circuits and conduct reliable tests.
 
@@ -19,6 +24,7 @@ This repository is dedicated to a powerful and user-friendly framework designed 
 5.  Run the tests to ensure the circuit functions correctly.
 
 **Contributions are Welcome:**
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 We are open to contributions from the community to improve this framework and make it even more useful. Feel free to open issues, propose enhancements, or submit pull requests.
 
