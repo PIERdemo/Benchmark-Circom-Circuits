@@ -1,6 +1,7 @@
 # Benchmark_Circuits
-![Circom Badge](https://img.shields.io/badge/circuits-circom-black)
-![Python Badge](https://img.shields.io/badge/compile-python-green)
+[![Circom Badge](https://img.shields.io/badge/circuits-circom-black)](https://github.com/iden3/circom)
+[![Snarkjs Badge](https://img.shields.io/badge/proof_system-snarkjs-yellow)](https://github.com/iden3/snarkjs)
+[![Python Badge](https://img.shields.io/badge/compile-python-green)]
 
 
 
@@ -24,6 +25,7 @@ This repository is dedicated to a powerful and user-friendly framework designed 
 5.  Run the tests to ensure the circuit functions correctly.
 
 **Contributions are Welcome:**
+
 [![MIT License](https://img.shields.io/badge/License-MIT-red.svg)](https://choosealicense.com/licenses/mit/)
 
 We are open to contributions from the community to improve this framework and make it even more useful. Feel free to open issues, propose enhancements, or submit pull requests.
