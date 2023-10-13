@@ -36,4 +36,4 @@ template Sha256Bytes(n) {
   }
 }
 
-component main = Sha256Bytes(NUM);
+//MAIN component main = Sha256Bytes(NUM);
