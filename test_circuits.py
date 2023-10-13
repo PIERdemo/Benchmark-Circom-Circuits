@@ -40,7 +40,7 @@ if __name__ == '__main__':
     circuit_name = f'poseidon_spongealt'
 
     generate_circuit({'NUM':NUM},f'./circuits/base/{circuit_name}.circom',id=NUM)
-    #generate_input(f'./input/input_{NUM}.json',NUM)
+    generate_input(f'./input/input_{NUM}.json',NUM)
     measures = test_circuit(f'{circuit_name}_{NUM}',f'./input/input_{NUM}.json',POT)
     append_to_csv(measures,'./benchmark_circuits.csv')
     
