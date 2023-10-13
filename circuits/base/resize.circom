@@ -1,4 +1,4 @@
-pragma circom 2.0.0;
+pragma circom 2.0.3;
 
 template Check_Resize(hFull, wFull, hResize, wResize) {
 
