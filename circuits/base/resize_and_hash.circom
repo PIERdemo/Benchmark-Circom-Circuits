@@ -1,7 +1,7 @@
-pragma circom 2.0.0;
+pragma circom 2.0.3;
 
-import "./resize.circom";
-import "./poseidon_sponge.circom";
+include "./resize.circom";
+include "./poseidon_sponge.circom";
 
 template Resize_Hash(hFull, wFull, hResize, wResize){
 
@@ -10,7 +10,7 @@ template Resize_Hash(hFull, wFull, hResize, wResize){
 
     signal output out;
 
-    component resize = Check_Resize(hFull, wFull, hResize, wResize);
+    component resize_checker = Check_Resize(hFull, wFull, hResize, wResize);
     component hash = SpongeHash(hFull * wFull * 3);
 
     //** Resize Checker **//
@@ -24,17 +24,18 @@ template Resize_Hash(hFull, wFull, hResize, wResize){
     for (var i = 0; i < hResize; i++)
         for (var j = 0; j < wResize; j++) 
             for (var k = 0; k < 3; k++) 
-                resize_checker.resize_image[i][j][k] <== low_image[i][j][k];
+                resize_checker.resize_image[i][j][k] <== resize_image[i][j][k];
 
     //** Poseidon Hash **// 
 
-    for (var i = 0; i < hResize; i++)
-        for (var j = 0; j < wResize; j++) 
-            for (var k = 0; k < 3; k++)
-                hash.in[(i*wResize*3) + (j*3) + k] <== full_image[i][j][k];
+    for (var i = 0; i < hFull; i++) {
+        for (var j = 0; j < wFull; j++) {
+            for (var k = 0; k < 3; k++) {
+                hash.in[(i*wFull*3) + (j*3) + k] <== full_image[i][j][k];
+            }
+        }
+    }        
 
-    out <== hash.out;
-
-
-
+    out <== hash.hash;
 }
+//MAIN component main = Resize_Hash(HFULL,WFULL,HRESIZE,WRESIZE);
