@@ -40,7 +40,7 @@ template Check_Resize(hFull, wFull, hResize, wResize) {
                 equals[i*wResize*3 + j*3 + k] = IsEqual();
                 equals[i*wResize*3 + j*3 + k].in[0] <== resize_image[i][j][k];
                 equals[i*wResize*3 + j*3 + k].in[1] <== pixel; 
-                equals[i*wResize*3 + j*3 + k].out === 1;
+                equals[i*wResize*3 + j*3 + k].out*equals[i*wResize*3 + j*3 + k].out === 1;
                 
             }
         }
