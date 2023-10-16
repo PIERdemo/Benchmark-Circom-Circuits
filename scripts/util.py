@@ -11,30 +11,40 @@ import subprocess
 import psutil
 import re
 
-def measure_command(command):
+
+def measure_command(command, time = True, memory = True):
     """
-    Execute a command and measure the time and memory used
-    :param command: command to execute
-    :return: tuple with the time and memory used
+    Measure the time and memory usage of a specified command.
+
+    :param command: The command to execute and measure.
+    :param time: True if you want to measure time, False otherwise.
+    :param memory: True if you want to measure memory usage, False otherwise.
+
+    :return: A tuple containing the elapsed time (if time=True) and memory usage (if memory=True).
     """
     command = f'/usr/bin/time -p -f "%e %M" {command} > /dev/null'
-    init_swap_used = psutil.swap_memory().used
-    max_swap_used = init_swap_used
-
+    if memory:
+        init_swap_used = psutil.swap_memory().used
+        max_swap_used = init_swap_used
+    
     process = subprocess.Popen(command, 
                                shell=True,
                                stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE)
-    while process.poll() is None:
-        max_swap_used = max(max_swap_used, psutil.swap_memory().used)
+    
+    if memory:
+        while process.poll() is None:
+            max_swap_used = max(max_swap_used, psutil.swap_memory().used)
 
     command_output = process.communicate()[1].decode('utf-8')
+    t,mem = command_output.split('\n')[0].split(' ')
+    t = float(t)
+
+    if memory:
+        swap = (max_swap_used-init_swap_used)/1024
+        m = float(mem)+(swap if swap > 0 else 0)
     
-    time,mem = command_output.split('\n')[0].split(' ')
-    swap = (max_swap_used-init_swap_used)/1024
-    
-    
-    return float(time),float(mem)+(swap if swap > 0 else 0)
+    return t if time else None, m if memory else None
 
 
 def generate_circuit(info, circuit_template, id = None):
