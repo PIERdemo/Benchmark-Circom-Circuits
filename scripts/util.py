@@ -47,6 +47,24 @@ def measure_command(command, time = True, memory = True):
     return t if time else None, m if memory else None
 
 
+def measure_pagefault_time_command(command):
+    """
+    Measure the time and number of page faults of a specified command.
+
+    :param command: The command to execute and measure.
+    :return: A tuple containing the elapsed time and number of page faults.
+    """
+    command = f'/usr/bin/time -p -f "%e %F" {command} > /dev/null'
+    process = subprocess.Popen(command,
+                               shell=True,
+                               stdout=subprocess.PIPE,
+                               stderr=subprocess.PIPE)
+    
+    command_output = process.communicate()[1].decode('utf-8')
+    time, pagefaults = command_output.split('\n')[0].split(' ')
+    return float(time), int(pagefaults)
+
+
 def generate_circuit(info, circuit_template, id = None):
     """
     Generate a circuit from a template

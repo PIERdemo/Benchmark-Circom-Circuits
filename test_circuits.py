@@ -1,6 +1,6 @@
 #!/usr/bin/python3.10
 
-from scripts.util import extract_contraints, generate_circuit, generate_input, generate_resize_input, measure_command
+from scripts.util import extract_contraints, generate_circuit, generate_input, generate_resize_input, measure_command, measure_pagefault_time_command
 
 def test_circuit(circuit_name, input_path,pot_path,verbose=True,time = True, memory = True):
     r1cs_path = 'output/compiled_circuit/compiled_{}/{}.r1cs'
@@ -33,12 +33,12 @@ def test_circuit(circuit_name, input_path,pot_path,verbose=True,time = True, mem
            'VERIFIER_TIME':t_v,
            'VERIFIER_MEMORY':m_v}
     
+def test_page_fault(input_size, circuit_name = '' ,pot_path = './powersoftau/28pot.ptau',verbose = True):
+    #sudo cgset -r memory.limit_in_bytes=8589934592 circom_test
+    limit_mem = 'sudo cgexec -g memory:circom_test {}'
+    command = 'stressapptest -M 4000 -s 3'
+    final_command = limit_mem.format(command)
 
-if __name__ == '__main__':
-    TIME, MEMORY = True, False
-    POT = './powersoftau/28pot.ptau'
-    NUM = 50
-    circuit_name = f'sha256_bytes'
-    generate_circuit({'NUM':NUM},f'./circuits/base/{circuit_name}.circom',id=NUM)
-    generate_input(f'./input/input_{NUM}.json',NUM)
-    measures = test_circuit(f'{circuit_name}_{NUM}',f'./input/input_{NUM}.json',POT,time=TIME,memory=MEMORY)
+    print(measure_pagefault_time_command(final_command))
+    pass
+
