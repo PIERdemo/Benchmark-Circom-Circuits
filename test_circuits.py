@@ -1,6 +1,6 @@
 #!/usr/bin/python3.10
 
-from scripts.util import extract_contraints, generate_circuit, generate_input, generate_resize_input, measure_command
+from scripts.util import extract_contraints, generate_circuit, generate_input, generate_resize_input, measure_command, compute_input
 
 def test_circuit(circuit_name, input_path,pot_path,verbose=True,time = True, memory = True):
     r1cs_path = 'output/compiled_circuit/compiled_{}/{}.r1cs'
@@ -37,8 +37,19 @@ def test_circuit(circuit_name, input_path,pot_path,verbose=True,time = True, mem
 if __name__ == '__main__':
     TIME, MEMORY = True, False
     POT = './powersoftau/28pot.ptau'
+    # TEST1: test sha256 circuit given the size of an image as input
     NUM = 50
     circuit_name = f'sha256_bytes'
     generate_circuit({'NUM':NUM},f'./circuits/base/{circuit_name}.circom',id=NUM)
     generate_input(f'./input/input_{NUM}.json',NUM)
     measures = test_circuit(f'{circuit_name}_{NUM}',f'./input/input_{NUM}.json',POT,time=TIME,memory=MEMORY)
+
+    # TEST2: test resize_and_hash circuit given the availble GB as input
+    # AVAILABLE_GB = 1.5
+    # INPUT = compute_input(AVAILABLE_GB)
+    # print(INPUT)
+    # HFULL, WFULL, HRESIZE, WRESIZE = INPUT+1,INPUT+1, int(INPUT/2)+1, int(INPUT/2)+1
+    # circuit_name = f'resize_and_hash'
+    # generate_circuit({'HFULL': HFULL, 'WFULL':WFULL, 'HRESIZE':HRESIZE, 'WRESIZE' : WRESIZE },f'./circuits/base/{circuit_name}.circom',id=HFULL*WFULL)    
+    # generate_resize_input(f'./input/input_{HFULL}_{WFULL}.json',HFULL, WFULL, HRESIZE, WRESIZE)
+    # measures = test_circuit(f'{circuit_name}_{NUM}',f'./input/input_{NUM}.json',POT,time=TIME,memory=MEMORY)

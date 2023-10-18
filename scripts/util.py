@@ -6,6 +6,8 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 import tensorflow as tf
 import numpy as np
+import pandas as pd
+from math import sqrt
 import random
 import subprocess
 import psutil
@@ -94,7 +96,27 @@ def generate_input(output_path, size):
     os.makedirs('input',exist_ok=True)
     with open(output_path, 'w') as outfile:
         json.dump(json_input, outfile)
+
+def compute_input(GB):
+    """
+    Compute the size of the input from a line, built with linear regression, 
+    measuring the number constraints from the input size
+    :param GB: the amount of available memory
+    """
+    # Read data from the CSV file
+    data = pd.read_csv('./scripts/benchmark_circuits_resize.csv')
+
+    # Extract 'INPUT SIZE' and 'CONSTRAINTS' columns from the DataFrame
+    input_size = data['INPUT SIZE']
+    constraints = data['CONSTRAINTS']
+
+    # Perform linear regression
+    slope, intercept = np.polyfit(input_size, constraints, 1)
     
+    best_constraints = 8388608 * GB / 8.996896768
+    return int(sqrt(best_constraints / slope - intercept))
+
+
 
 def extract_contraints(r1cs_file):
     infos = subprocess.check_output(f'snarkjs r1cs info {r1cs_file}',shell=True).decode('utf-8')
