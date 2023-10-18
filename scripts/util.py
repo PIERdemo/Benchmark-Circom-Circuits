@@ -14,6 +14,7 @@ import psutil
 import re
 
 
+
 def measure_command(command, time = True, memory = True):
     """
     Measure the time and memory usage of a specified command.
@@ -49,22 +50,27 @@ def measure_command(command, time = True, memory = True):
     return t if time else None, m if memory else None
 
 
-def measure_pagefault_time_command(command):
+def measure_pagefault_time_command(command, password=None):
     """
     Measure the time and number of page faults of a specified command.
 
     :param command: The command to execute and measure.
+    :param password: The password to pass to the command, if it necessitates sudo privileges.
     :return: A tuple containing the elapsed time and number of page faults.
     """
-    command = f'/usr/bin/time -p -f "%e %F" {command} > /dev/null'
-    process = subprocess.Popen(command,
-                               shell=True,
-                               stdout=subprocess.PIPE,
-                               stderr=subprocess.PIPE)
+    command = f'/usr/bin/time -p -f "%e %F %P %W" {command}'
+    if password is not None:
+        command = f'echo "{password}" | sudo -S {command}'
     
+    process = subprocess.Popen(command,
+                                shell=True,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE)
     command_output = process.communicate()[1].decode('utf-8')
-    time, pagefaults = command_output.split('\n')[0].split(' ')
-    return float(time), int(pagefaults)
+    time, pagefaults, cpu_percentage, swap_out = command_output.split('\n')[0].split(' ')
+    
+
+    return float(time), int(pagefaults), cpu_percentage, int(swap_out)
 
 
 def generate_circuit(info, circuit_template, id = None):

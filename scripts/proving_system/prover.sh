@@ -6,7 +6,7 @@ fi
 CIRCUIT_NAME=$1
 CIRCUIT_DIR=$(readlink -f ./output/compiled_circuit/compiled_${CIRCUIT_NAME})
 WITNESS="${CIRCUIT_DIR}/${CIRCUIT_NAME}_witness.wtns"
-RAPIDSNARK=/home/$USER/rapidsnark/build/prover
+RAPIDSNARK=/bin/prover
 
 cd output/snarkjs_circuit/${CIRCUIT_NAME}
 
