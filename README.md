@@ -24,6 +24,12 @@ This repository is dedicated to a powerful and user-friendly framework designed 
 4.  Edit the files `test_circuits.py` to adapt it to the new circuit, updating the circuit name, powersoftau, and other parameters as needed.
 5.  Run the benchmark to ensure the circuit functions correctly.
 
+**Troubleshooting** 
+If you get any error, take care of properly set the following parameters:
+* In `scripts/compile_circuit.sh`, properly set `CIRCOMLIB_PATH` path. If `circomlib` is not installed, run: `npm install circomlib`.
+* In `test_circuits.py`, properly set `POT` variable with the path to the `*.ptau` file (download it from [here](https://github.com/iden3/snarkjs#7-prepare-phase-2)). It should be in `poweroftau` directory but it can be elsewhere.
+* In `scripts/proving_system/prover.sh`, properly set `RAPIDSNARK` variable with the path to the `build/prover` executable. For information on how to install Rapidsnark visit [here](https://github.com/iden3/rapidsnark)
+
 **Contributions are Welcome:**
 
 [![MIT License](https://img.shields.io/badge/License-MIT-red.svg)](https://choosealicense.com/licenses/mit/)

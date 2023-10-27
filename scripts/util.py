@@ -58,7 +58,8 @@ def measure_pagefault_time_command(command, password=None):
     :param password: The password to pass to the command, if it necessitates sudo privileges.
     :return: A tuple containing the elapsed time and number of page faults.
     """
-    command = f'/usr/bin/time -p -f "%e %F %P %W" {command}'
+    command = f'/usr/bin/time -p -f "%e %F %P %W %M" {command}'
+    print(command)
     if password is not None:
         command = f'echo "{password}" | sudo -S {command}'
     
@@ -66,11 +67,11 @@ def measure_pagefault_time_command(command, password=None):
                                 shell=True,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE)
-    command_output = process.communicate()[1].decode('utf-8')
-    time, pagefaults, cpu_percentage, swap_out = command_output.split('\n')[0].split(' ')
-    
 
-    return float(time), int(pagefaults), cpu_percentage, int(swap_out)
+    command_output = process.communicate()[1].decode('utf-8')
+    time, pagefaults, cpu_percentage, swap_out, mem = command_output.split('\n')[0].split(' ') if (len(command_output.split(": ")) == 1) else command_output.split(": ")[1].split('\n')[0].split(' ')
+
+    return float(time), int(pagefaults), cpu_percentage, int(swap_out), mem
 
 
 def generate_circuit(info, circuit_template, id = None):
@@ -138,7 +139,8 @@ def compute_input(GB):
     slope, intercept = np.polyfit(input_size, constraints, 1)
     
     best_constraints = 8388608 * GB / 8.996896768
-    return int(sqrt(best_constraints / slope - intercept))
+    
+    return int(sqrt(abs(best_constraints / slope - intercept))), int(best_constraints)
 
 
 
