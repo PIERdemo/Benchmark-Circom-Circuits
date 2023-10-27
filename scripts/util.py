@@ -69,6 +69,7 @@ def measure_pagefault_time_command(command, password=None):
                                 stderr=subprocess.PIPE)
 
     command_output = process.communicate()[1].decode('utf-8')
+    
     time, pagefaults, cpu_percentage, swap_out, mem = command_output.split('\n')[0].split(' ') if (len(command_output.split(": ")) == 1) else command_output.split(": ")[1].split('\n')[0].split(' ')
 
     return float(time), int(pagefaults), cpu_percentage, int(swap_out), mem
