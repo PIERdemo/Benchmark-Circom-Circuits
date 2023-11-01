@@ -41,7 +41,7 @@ def test_circuit(circuit_name, input_path,pot_path, input_array=[],verbose=True)
 if __name__ == '__main__':
     POT = 'powersoftau/28pot.ptau'
     steps = 4
-    HFULL, WFULL, HRESIZE, WRESIZE = (1240+1),(1240+1),(1240/2+1),(1240/2+1)
+    HFULL, WFULL, HRESIZE, WRESIZE = (4+1),(4+1),(2+1),(2+1)
     circuit_name = f'resize_and_hash_optimized'
 
     generate_circuit({'HFULL': HFULL, 'WFULL':WFULL, 'HRESIZE':HRESIZE, 'WRESIZE' : WRESIZE },f'./circuits/base/{circuit_name}.circom',id=HFULL*WFULL)
