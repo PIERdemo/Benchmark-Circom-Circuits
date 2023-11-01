@@ -32,7 +32,7 @@ def test_page_fault(input_size, password, counter = 4, circuit_name = 'resize_an
 
 
 if __name__ == '__main__':
-    MAX_available_GB = [int(12.8e8),int(12.8e8),int(12.8e8),int(12.8e8),int(12.8e8),int(12.8e8),int(12.8e8)]
+    MAX_available_GB = [int(20e8)]*5
     MAX_GB = 1
     PASSWORD = getpass(f'[{os.getlogin()}] password: ')
 
